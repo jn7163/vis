@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 3.5.0
- * @date    2014-09-27
+ * @date    2014-09-28
  *
  * @license
  * Copyright (C) 2011-2014 Almende B.V, http://almende.com
@@ -15991,6 +15991,7 @@ return /******/ (function(modules) { // webpackBootstrap
     this.groupId = groupId;
     this.amountSubgroups = 0;
     this.subgroups = {};
+    this.visibleSubgroups = 0;
     this.itemSet = itemSet;
 
     this.dom = {};
@@ -16174,6 +16175,8 @@ return /******/ (function(modules) { // webpackBootstrap
     this.dom.background.style.height  = height + 'px';
     this.dom.foreground.style.height  = height + 'px';
     this.dom.label.style.height = height + 'px';
+
+    this.visibleSubgroups = Math.round(height / 40);
 
     // update vertical position of items after they are re-stacked and the height of the group is calculated
     for (var i = 0, ii = this.visibleItems.length; i < ii; i++) {
@@ -17640,9 +17643,9 @@ return /******/ (function(modules) { // webpackBootstrap
     if (this.data.subgroup !== undefined) {
       var height = 40;
       var subgroup = this.data.subgroup;
-      var amountSubgroups = this.parent.amountSubgroups - 1;
+      var amountSubgroups = this.parent.visibleSubgroups - 1;
 
-      this.dom.box.style.top = (amountSubgroups - subgroup) * height + 'px';
+      this.dom.box.style.top = (amountSubgroups - subgroup) * height + this.parent.top + 2 + 'px';
       //this.dom.box.style.bottom = onTop ? '' : '0';
       this.dom.box.style.height = height + 'px';
     }
